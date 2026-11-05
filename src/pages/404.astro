@@ -1,0 +1,32 @@
+---
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import Icon from '@/components/Icon.astro';
+---
+
+<BaseLayout title="Seite nicht gefunden" noindex>
+  <section class="section">
+    <div class="container container--narrow nf">
+      <p class="eyebrow">Fehler 404</p>
+      <h1>Diese Seite gibt es leider nicht.</h1>
+      <p class="lead">Vielleicht wurde sie verschoben – auf der Startseite finden Sie alle Inhalte.</p>
+      <div class="btn-row">
+        <a class="btn" href="/">Zur Startseite <Icon name="arrow" /></a>
+        <a class="btn btn--ghost" href="/kontakt/">Kontakt</a>
+      </div>
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .nf {
+    text-align: center;
+    padding-block: 4rem;
+  }
+  .nf .eyebrow,
+  .nf .btn-row {
+    justify-content: center;
+  }
+  .nf h1 {
+    margin-inline: auto;
+  }
+</style>

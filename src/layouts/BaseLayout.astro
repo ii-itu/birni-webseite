@@ -1,0 +1,107 @@
+---
+import '@fontsource-variable/inter';
+import '@fontsource-variable/fraunces';
+import '@/styles/global.css';
+
+import { getImage } from 'astro:assets';
+import Header from '@/components/Header.astro';
+import Footer from '@/components/Footer.astro';
+import { practice } from '@/data/site';
+import portrait from '@/assets/birnstein-10.jpg';
+
+interface Props {
+  title?: string;
+  description?: string;
+  noindex?: boolean;
+}
+
+const {
+  title,
+  description = 'Psychotherapie (Integrative Therapie) in Krumbach, Niederösterreich – Mirko Birnstein, MSc. Schwerpunkte: Sucht, Trauma, Angst, Depression, Stress und Selbstwert.',
+  noindex = false,
+} = Astro.props;
+
+const fullTitle = title ? `${title} | ${practice.name}` : `${practice.name} – ${practice.tagline} in Krumbach`;
+const canonical = new URL(Astro.url.pathname, Astro.site);
+const ogImage = await getImage({ src: portrait, format: 'jpg', width: 250 });
+const ogImageUrl = new URL(ogImage.src, Astro.site);
+
+const jsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'MedicalBusiness',
+  name: `${practice.name} – ${practice.tagline}`,
+  description,
+  url: practice.url,
+  image: ogImageUrl.href,
+  telephone: '+43 680 140 97 97',
+  email: practice.email,
+  priceRange: '€€',
+  medicalSpecialty: 'Psychiatric',
+  address: {
+    '@type': 'PostalAddress',
+    streetAddress: practice.street,
+    postalCode: practice.zip,
+    addressLocality: practice.city,
+    addressRegion: 'Niederösterreich',
+    addressCountry: practice.country,
+  },
+  geo: { '@type': 'GeoCoordinates', latitude: practice.geo.lat, longitude: practice.geo.lon },
+  founder: { '@type': 'Person', name: practice.name, jobTitle: 'Psychotherapeut' },
+};
+---
+
+<!doctype html>
+<html lang="de-AT" class="no-js">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <script is:inline>document.documentElement.classList.remove('no-js');</script>
+    <title>{fullTitle}</title>
+    <meta name="description" content={description} />
+    <link rel="canonical" href={canonical} />
+    {noindex && <meta name="robots" content="noindex" />}
+    <meta name="theme-color" content="#39a6de" />
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <link rel="sitemap" href="/sitemap-index.xml" />
+
+    <meta property="og:type" content="website" />
+    <meta property="og:locale" content="de_AT" />
+    <meta property="og:site_name" content={practice.name} />
+    <meta property="og:title" content={fullTitle} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={canonical} />
+    <meta property="og:image" content={ogImageUrl} />
+    <meta name="twitter:card" content="summary" />
+
+    <script type="application/ld+json" set:html={JSON.stringify(jsonLd)} />
+  </head>
+  <body>
+    <a class="skip-link" href="#inhalt">Zum Inhalt springen</a>
+    <Header />
+    <main id="inhalt">
+      <slot />
+    </main>
+    <Footer />
+
+    <script>
+      // Sanftes Einblenden von Elementen mit .reveal
+      const items = document.querySelectorAll<HTMLElement>('.reveal');
+      if ('IntersectionObserver' in window) {
+        const io = new IntersectionObserver(
+          (entries) => {
+            for (const entry of entries) {
+              if (entry.isIntersecting) {
+                entry.target.classList.add('is-visible');
+                io.unobserve(entry.target);
+              }
+            }
+          },
+          { rootMargin: '0px 0px -8% 0px', threshold: 0.08 },
+        );
+        items.forEach((el) => io.observe(el));
+      } else {
+        items.forEach((el) => el.classList.add('is-visible'));
+      }
+    </script>
+  </body>
+</html>

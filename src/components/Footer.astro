@@ -1,0 +1,163 @@
+---
+import Icon from './Icon.astro';
+import { nav, practice } from '@/data/site';
+
+const year = new Date().getFullYear();
+---
+
+<footer class="site-footer">
+  <div class="container footer-grid">
+    <div class="footer-brand">
+      <p class="footer-name">{practice.name}</p>
+      <p class="footer-sub">{practice.tagline} · {practice.method}</p>
+      <p class="footer-note">Eingetragen in die PsychotherapeutInnenliste des Bundesministeriums für Gesundheit.</p>
+    </div>
+
+    <div>
+      <p class="footer-title">Kontakt</p>
+      <ul class="footer-list">
+        <li>
+          <Icon name="pin" size={18} />
+          <span>{practice.street}<br />{practice.zip} {practice.city}</span>
+        </li>
+        <li>
+          <Icon name="phone" size={18} />
+          <a href={practice.phoneHref}>{practice.phoneDisplay}</a>
+        </li>
+        <li>
+          <Icon name="mail" size={18} />
+          <a href={`mailto:${practice.email}`}>{practice.email}</a>
+        </li>
+      </ul>
+    </div>
+
+    <div>
+      <p class="footer-title">Seiten</p>
+      <ul class="footer-links">
+        {nav.map((item) => <li><a href={item.href}>{item.label}</a></li>)}
+      </ul>
+    </div>
+  </div>
+
+  <div class="container footer-bottom">
+    <p>© {year} {practice.shortName}</p>
+    <ul>
+      <li><a href="/impressum/">Impressum</a></li>
+      <li><a href="/datenschutz/">Datenschutz</a></li>
+    </ul>
+  </div>
+
+  <div class="crisis">
+    <div class="container">
+      <p>
+        <strong>In einer akuten Krise?</strong> Hilfe rund um die Uhr: Telefonseelsorge <a href="tel:142">142</a> ·
+        Rettung <a href="tel:144">144</a> · Notruf <a href="tel:112">112</a>
+      </p>
+    </div>
+  </div>
+</footer>
+
+<style>
+  .site-footer {
+    background: #10283a;
+    color: #c9d7e2;
+    font-size: 0.975rem;
+  }
+  .site-footer a {
+    color: #fff;
+    text-decoration: none;
+  }
+  .site-footer a:hover {
+    color: var(--blue-200);
+    text-decoration: underline;
+  }
+
+  .footer-grid {
+    display: grid;
+    grid-template-columns: 1.4fr 1fr 0.8fr;
+    gap: 2.5rem;
+    padding-block: 4rem 3rem;
+  }
+  .footer-name {
+    font: 500 1.5rem/1.2 var(--font-serif);
+    color: #fff;
+    margin-bottom: 0.35rem;
+  }
+  .footer-sub {
+    color: var(--blue);
+    margin-bottom: 1rem;
+  }
+  .footer-note {
+    font-size: 0.875rem;
+    max-width: 34ch;
+    color: #9fb3c3;
+  }
+  .footer-title {
+    font-size: 0.8125rem;
+    font-weight: 600;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: #fff;
+    margin-bottom: 1rem;
+  }
+  .footer-list,
+  .footer-links {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    gap: 0.75rem;
+  }
+  .footer-list li {
+    display: flex;
+    gap: 0.75rem;
+    align-items: flex-start;
+  }
+  .footer-list :global(.icon) {
+    color: var(--blue);
+    margin-top: 0.3rem;
+    flex-shrink: 0;
+  }
+
+  .footer-bottom {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    gap: 1rem;
+    padding-block: 1.5rem;
+    border-top: 1px solid rgb(255 255 255 / 0.1);
+    font-size: 0.9rem;
+  }
+  .footer-bottom p {
+    margin: 0;
+  }
+  .footer-bottom ul {
+    display: flex;
+    gap: 1.5rem;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+
+  .crisis {
+    background: #0b1e2c;
+    font-size: 0.875rem;
+    color: #9fb3c3;
+    padding-block: 0.9rem;
+  }
+  .crisis p {
+    margin: 0;
+  }
+  .crisis strong {
+    color: #fff;
+    font-weight: 600;
+  }
+
+  @media (max-width: 800px) {
+    .footer-grid {
+      grid-template-columns: 1fr;
+      gap: 2rem;
+      padding-block: 3rem 2rem;
+    }
+  }
+</style>

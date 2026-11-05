@@ -1,0 +1,208 @@
+---
+import { Image } from 'astro:assets';
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import PageHero from '@/components/PageHero.astro';
+import ContactCta from '@/components/ContactCta.astro';
+import Icon from '@/components/Icon.astro';
+import { career, practice } from '@/data/site';
+import portrait from '@/assets/birnstein-11.jpg';
+import portrait2 from '@/assets/birnstein-12.jpg';
+---
+
+<BaseLayout
+  title="Über mich"
+  description="Werdegang und Ausbildungen von Mirko Birnstein, MSc – Psychotherapeut (Integrative Therapie) mit langjähriger Erfahrung in Suchttherapie und Traumafolgentherapie."
+>
+  <PageHero
+    eyebrow="Über mich"
+    title={practice.name}
+    lead="Psychotherapeut in der Methode Integrative Therapie – mit langjähriger Erfahrung in der Arbeit mit suchtkranken Menschen, in der Traumafolgentherapie und in der Leitung therapeutischer Einrichtungen."
+  />
+
+  <section class="section">
+    <div class="container about">
+      <aside class="about-aside">
+        <div class="photos">
+          <Image src={portrait} alt={`${practice.name} im Porträt`} widths={[250]} sizes="250px" class="photo photo--1" />
+          <Image src={portrait2} alt="" widths={[250]} sizes="250px" class="photo photo--2" />
+        </div>
+        <ul class="facts card">
+          <li>
+            <span class="icon-badge"><Icon name="leaf" size={22} /></span>
+            <span><strong>Methode</strong>{practice.method}</span>
+          </li>
+          <li>
+            <span class="icon-badge"><Icon name="shield" size={22} /></span>
+            <span><strong>Weiterbildung</strong>Traumafolgentherapie</span>
+          </li>
+          <li>
+            <span class="icon-badge"><Icon name="check" size={22} /></span>
+            <span><strong>Eingetragen</strong>PsychotherapeutInnenliste des Gesundheitsministeriums</span>
+          </li>
+        </ul>
+      </aside>
+
+      <div>
+        <p class="eyebrow">Werdegang</p>
+        <h2>Beruflicher Werdegang und Ausbildungen</h2>
+        <ol class="timeline">
+          {
+            career.map((item) => (
+              <li class="reveal">
+                {item.period && <span class="period">{item.period}</span>}
+                <h3>{item.title}</h3>
+                {item.place && <p>{item.place}</p>}
+              </li>
+            ))
+          }
+        </ol>
+      </div>
+    </div>
+  </section>
+
+  <ContactCta />
+</BaseLayout>
+
+<style>
+  .about {
+    display: grid;
+    grid-template-columns: 340px 1fr;
+    gap: clamp(2rem, 6vw, 5rem);
+    align-items: start;
+  }
+  .about-aside {
+    position: sticky;
+    top: calc(var(--header-h) + 2rem);
+    display: grid;
+    gap: 2rem;
+  }
+  .photos {
+    position: relative;
+    height: 400px;
+  }
+  .photos :global(.photo) {
+    position: absolute;
+    width: 62%;
+    aspect-ratio: 2 / 3;
+    object-fit: cover;
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow);
+  }
+  .photos :global(.photo--1) {
+    left: 0;
+    top: 0;
+    z-index: 1;
+    border: 6px solid #fff;
+  }
+  .photos :global(.photo--2) {
+    right: 0;
+    bottom: 0;
+    opacity: 0.95;
+  }
+  .photos::before {
+    content: '';
+    position: absolute;
+    right: 8%;
+    top: 6%;
+    width: 46%;
+    height: 46%;
+    border-radius: var(--radius-lg);
+    background: var(--blue-100);
+  }
+
+  .facts {
+    list-style: none;
+    margin: 0;
+    display: grid;
+    gap: 1.1rem;
+  }
+  .facts li {
+    display: flex;
+    gap: 0.9rem;
+    align-items: center;
+    font-size: 0.95rem;
+    line-height: 1.4;
+    color: var(--ink-soft);
+  }
+  .facts .icon-badge {
+    width: 42px;
+    height: 42px;
+    border-radius: 12px;
+  }
+  .facts strong {
+    display: block;
+    color: var(--ink);
+    font-size: 0.8rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+
+  .timeline {
+    list-style: none;
+    margin: 2.5rem 0 0;
+    padding: 0;
+    position: relative;
+  }
+  .timeline::before {
+    content: '';
+    position: absolute;
+    left: 7px;
+    top: 8px;
+    bottom: 8px;
+    width: 2px;
+    background: linear-gradient(var(--blue), var(--blue-200));
+    border-radius: 2px;
+  }
+  .timeline li {
+    position: relative;
+    padding: 0 0 2rem 2.5rem;
+  }
+  .timeline li::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 6px;
+    width: 16px;
+    height: 16px;
+    border-radius: 50%;
+    background: #fff;
+    border: 3px solid var(--blue);
+  }
+  .timeline li:first-child::before {
+    background: var(--blue);
+    box-shadow: 0 0 0 5px var(--blue-100);
+  }
+  .period {
+    display: inline-block;
+    font-size: 0.8125rem;
+    font-weight: 600;
+    letter-spacing: 0.06em;
+    color: var(--blue-700);
+    background: var(--blue-100);
+    padding: 0.15rem 0.6rem;
+    border-radius: 999px;
+    margin-bottom: 0.5rem;
+  }
+  .timeline h3 {
+    font-size: 1.15rem;
+    margin: 0 0 0.25rem;
+  }
+  .timeline p {
+    margin: 0;
+    color: var(--ink-soft);
+    font-size: 0.975rem;
+  }
+
+  @media (max-width: 900px) {
+    .about {
+      grid-template-columns: 1fr;
+    }
+    .about-aside {
+      position: static;
+    }
+    .photos {
+      max-width: 360px;
+      height: 380px;
+    }
+  }
+</style>

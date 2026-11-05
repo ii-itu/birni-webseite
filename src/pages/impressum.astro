@@ -1,0 +1,73 @@
+---
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import PageHero from '@/components/PageHero.astro';
+import { practice } from '@/data/site';
+---
+
+<BaseLayout title="Impressum" description="Impressum der Website von Mirko Birnstein, MSc – Praxis für Psychotherapie in Krumbach.">
+  <PageHero eyebrow="Rechtliches" title="Impressum" />
+
+  <section class="section">
+    <div class="container container--narrow prose">
+      <h2>Angaben gemäß § 5 ECG und § 25 MedienG</h2>
+      <address>
+        <strong>{practice.name}</strong><br />
+        {practice.tagline}<br />
+        {practice.street}<br />
+        {practice.zip} {practice.city}, Österreich
+      </address>
+      <p>
+        Tel.: <a href={practice.phoneHref}>{practice.phoneDisplay}</a><br />
+        E-Mail: <a href={`mailto:${practice.email}`}>{practice.email}</a><br />
+        Web: <a href={practice.url}>www.mirko-birnstein.at</a>
+      </p>
+      <p>
+        <strong>Berufsbezeichnung:</strong> Psychotherapeut (verliehen in Österreich)<br />
+        <strong>Psychotherapeutische Methode:</strong> {practice.method}<br />
+        Eingetragen in die PsychotherapeutInnenliste des Bundesministeriums für Gesundheit.<br />
+        <strong>Berufsrecht:</strong> Psychotherapiegesetz, abrufbar unter <a
+          href="https://www.ris.bka.gv.at"
+          target="_blank"
+          rel="noopener noreferrer">www.ris.bka.gv.at</a
+        >
+      </p>
+
+      <h2>Haftungs- und Schutzrechtshinweise</h2>
+      <p>
+        <strong>Haftungsausschluss:</strong> Die Inhalte dieses Onlineangebotes wurden sorgfältig und nach unserem
+        aktuellen Kenntnisstand erstellt, dienen jedoch nur der Information und entfalten keine rechtlich bindende
+        Wirkung, sofern es sich nicht um gesetzlich verpflichtende Informationen (z. B. das Impressum, die
+        Datenschutzerklärung, AGB oder verpflichtende Belehrungen von Verbrauchern) handelt. Wir behalten uns vor, die
+        Inhalte vollständig oder teilweise zu ändern oder zu löschen, soweit vertragliche Verpflichtungen unberührt
+        bleiben. Alle Angebote sind freibleibend und unverbindlich.
+      </p>
+      <p>
+        <strong>Links auf fremde Webseiten:</strong> Die Inhalte fremder Webseiten, auf die wir direkt oder indirekt
+        verweisen, liegen außerhalb unseres Verantwortungsbereiches und wir machen sie uns nicht zu eigen. Für alle
+        Inhalte und Nachteile, die aus der Nutzung der in den verlinkten Webseiten aufrufbaren Informationen entstehen,
+        übernehmen wir keine Verantwortung.
+      </p>
+      <p>
+        <strong>Urheberrechte und Markenrechte:</strong> Alle auf dieser Website dargestellten Inhalte, wie Texte,
+        Fotografien, Grafiken, Marken und Warenzeichen sind durch die jeweiligen Schutzrechte (Urheberrechte,
+        Markenrechte) geschützt. Die Verwendung, Vervielfältigung usw. unterliegen unseren Rechten oder den Rechten der
+        jeweiligen Urheber bzw. Rechteinhaber.
+      </p>
+      <p>
+        <strong>Hinweise auf Rechtsverstöße:</strong> Sollten Sie innerhalb unseres Internetauftritts Rechtsverstöße
+        bemerken, bitten wir Sie, uns auf diese hinzuweisen. Wir werden rechtswidrige Inhalte und Links nach
+        Kenntnisnahme unverzüglich entfernen.
+      </p>
+      <p>
+        <strong>Gleichbehandlung:</strong> Im Sinne des Gleichbehandlungsgesetzes weisen wir darauf hin, dass
+        geschlechtsspezifische Ausdrücke für alle Geschlechter gleichermaßen zu verstehen sind.
+      </p>
+      <p>
+        <strong>Widerspruch Werbe-Mails:</strong> Der Nutzung von im Rahmen der Impressumspflicht veröffentlichten
+        Kontaktdaten zur Übersendung von nicht ausdrücklich angeforderter Werbung und Informationsmaterialien wird
+        hiermit widersprochen. Die Betreiber der Seiten behalten sich ausdrücklich rechtliche Schritte im Falle der
+        unverlangten Zusendung von Werbeinformationen, etwa durch Spam-E-Mails, vor.
+      </p>
+    </div>
+  </section>
+</BaseLayout>

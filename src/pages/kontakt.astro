@@ -1,0 +1,204 @@
+---
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import PageHero from '@/components/PageHero.astro';
+import Icon from '@/components/Icon.astro';
+import { practice } from '@/data/site';
+
+const { lat, lon } = practice.geo;
+const d = 0.006;
+const mapSrc = `https://www.openstreetmap.org/export/embed.html?bbox=${lon - d * 1.6}%2C${lat - d}%2C${lon + d * 1.6}%2C${lat + d}&layer=mapnik&marker=${lat}%2C${lon}`;
+const mapLink = `https://www.openstreetmap.org/?mlat=${lat}&mlon=${lon}#map=17/${lat}/${lon}`;
+---
+
+<BaseLayout
+  title="Kontakt"
+  description="Kontakt zur Praxis für Psychotherapie Mirko Birnstein, MSc in Krumbach: Puchheimergasse 15, 2851 Krumbach · Tel. 0680 140 97 97 · office@mirko-birnstein.at"
+>
+  <PageHero
+    eyebrow="Kontakt"
+    title="Ich freue mich auf Ihre Nachricht"
+    lead="Am einfachsten erreichen Sie mich telefonisch. Falls ich gerade in einer Sitzung bin, rufe ich Sie so bald wie möglich zurück."
+  />
+
+  <section class="section">
+    <div class="container contact">
+      <div class="contact-cards">
+        <a class="card contact-card" href={practice.phoneHref}>
+          <span class="icon-badge"><Icon name="phone" /></span>
+          <span>
+            <span class="label">Telefon</span>
+            <span class="value">{practice.phoneDisplay}</span>
+          </span>
+        </a>
+        <a class="card contact-card" href={`mailto:${practice.email}`}>
+          <span class="icon-badge"><Icon name="mail" /></span>
+          <span>
+            <span class="label">E-Mail</span>
+            <span class="value">{practice.email}</span>
+          </span>
+        </a>
+        <div class="card contact-card">
+          <span class="icon-badge"><Icon name="pin" /></span>
+          <address>
+            <span class="label">Praxis</span>
+            <span class="value">{practice.name}</span>
+            {practice.street}<br />
+            {`${practice.zip} ${practice.city}`}
+          </address>
+        </div>
+        <div class="note">
+          <Icon name="clock" size={20} />
+          <span><strong>{practice.appointmentNote}.</strong> Bitte vereinbaren Sie vorab einen Termin.</span>
+        </div>
+      </div>
+
+      <div class="map" data-map data-src={mapSrc}>
+        <div class="map-placeholder">
+          <span class="icon-badge"><Icon name="pin" /></span>
+          <p class="map-title">Karte anzeigen</p>
+          <p>
+            Beim Laden der Karte werden Daten (u. a. Ihre IP-Adresse) an OpenStreetMap übertragen. Mehr dazu in der <a
+              href="/datenschutz/#karte">Datenschutzerklärung</a
+            >.
+          </p>
+          <div class="btn-row">
+            <button type="button" class="btn" data-map-load>Karte laden</button>
+            <a class="btn btn--ghost" href={mapLink} target="_blank" rel="noopener noreferrer">
+              In OpenStreetMap öffnen
+              <Icon name="external" size={18} />
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+</BaseLayout>
+
+<script>
+  document.querySelectorAll<HTMLElement>('[data-map]').forEach((map) => {
+    map.querySelector('[data-map-load]')?.addEventListener('click', () => {
+      const iframe = document.createElement('iframe');
+      iframe.src = map.dataset.src ?? '';
+      iframe.title = 'Lageplan der Praxis auf OpenStreetMap';
+      iframe.loading = 'lazy';
+      iframe.referrerPolicy = 'no-referrer';
+      map.replaceChildren(iframe);
+      map.classList.add('is-loaded');
+    });
+  });
+</script>
+
+<style>
+  .contact {
+    display: grid;
+    grid-template-columns: 1fr 1.3fr;
+    gap: clamp(1.5rem, 4vw, 3rem);
+    align-items: stretch;
+  }
+  .contact-cards {
+    display: grid;
+    gap: 1rem;
+    align-content: start;
+  }
+  .contact-card {
+    display: flex;
+    gap: 1.1rem;
+    align-items: flex-start;
+    text-decoration: none;
+    color: var(--ink);
+    transition: border-color 0.2s, box-shadow 0.2s, transform 0.2s;
+  }
+  a.contact-card:hover {
+    border-color: var(--blue-200);
+    box-shadow: var(--shadow);
+    transform: translateY(-2px);
+    color: var(--ink);
+  }
+  .contact-card address {
+    font-style: normal;
+    line-height: 1.55;
+    color: var(--ink-soft);
+  }
+  .label {
+    display: block;
+    font-size: 0.8rem;
+    font-weight: 600;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--blue-700);
+  }
+  .value {
+    display: block;
+    font: 500 1.2rem/1.35 var(--font-serif);
+    color: var(--ink);
+    word-break: break-word;
+  }
+  .note {
+    display: flex;
+    gap: 0.75rem;
+    align-items: flex-start;
+    padding: 1.1rem 1.25rem;
+    border-radius: var(--radius);
+    background: var(--blue-100);
+    font-size: 0.975rem;
+  }
+  .note :global(.icon) {
+    color: var(--blue-700);
+    margin-top: 0.2rem;
+    flex-shrink: 0;
+  }
+
+  .map {
+    position: relative;
+    min-height: 460px;
+    border-radius: var(--radius-lg);
+    overflow: hidden;
+    border: 1px solid var(--line);
+    background:
+      radial-gradient(circle at 50% 45%, var(--blue-100) 0, transparent 55%),
+      repeating-linear-gradient(0deg, transparent 0 38px, var(--line) 38px 39px),
+      repeating-linear-gradient(90deg, transparent 0 38px, var(--line) 38px 39px),
+      var(--surface);
+  }
+  .map :global(iframe) {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    border: 0;
+  }
+  .map-placeholder {
+    position: absolute;
+    inset: 0;
+    display: grid;
+    place-content: center;
+    justify-items: center;
+    text-align: center;
+    padding: 2rem;
+    gap: 0.5rem;
+  }
+  .map-placeholder p {
+    max-width: 44ch;
+    margin: 0;
+    color: var(--ink-soft);
+    font-size: 0.95rem;
+  }
+  .map-placeholder .map-title {
+    font: 500 1.4rem/1.2 var(--font-serif);
+    color: var(--ink);
+    margin-top: 0.5rem;
+  }
+  .map-placeholder .btn-row {
+    justify-content: center;
+    margin-top: 1rem;
+  }
+
+  @media (max-width: 900px) {
+    .contact {
+      grid-template-columns: 1fr;
+    }
+    .map {
+      min-height: 400px;
+    }
+  }
+</style>

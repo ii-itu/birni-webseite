@@ -1,0 +1,110 @@
+---
+import Icon from './Icon.astro';
+import { practice } from '@/data/site';
+
+interface Props {
+  title?: string;
+  text?: string;
+}
+
+const {
+  title = 'Der erste Schritt ist ein Gespräch',
+  text = 'Rufen Sie mich gerne an oder schreiben Sie mir eine E-Mail. Gemeinsam finden wir einen Termin für ein unverbindliches Erstgespräch.',
+} = Astro.props;
+---
+
+<section class="cta-section">
+  <div class="container">
+    <div class="cta reveal">
+      <div class="cta-text">
+        <h2>{title}</h2>
+        <p>{text}</p>
+        <p class="cta-note"><Icon name="clock" size={18} /> {practice.appointmentNote}</p>
+      </div>
+      <div class="cta-actions">
+        <a class="btn btn--light" href={practice.phoneHref}>
+          <Icon name="phone" />
+          {practice.phoneDisplay}
+        </a>
+        <a class="btn cta-mail" href={`mailto:${practice.email}`}>
+          <Icon name="mail" />
+          E-Mail schreiben
+        </a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  .cta-section {
+    padding-block: 0 var(--section);
+  }
+  .cta {
+    position: relative;
+    overflow: hidden;
+    display: grid;
+    grid-template-columns: 1.4fr 1fr;
+    gap: 2rem;
+    align-items: center;
+    padding: clamp(2rem, 5vw, 3.5rem);
+    border-radius: var(--radius-lg);
+    background: linear-gradient(135deg, var(--blue-700) 0%, #2a8fc6 60%, var(--blue) 100%);
+    color: #fff;
+  }
+  .cta::before,
+  .cta::after {
+    content: '';
+    position: absolute;
+    border-radius: 50%;
+    border: 1px solid rgb(255 255 255 / 0.18);
+    pointer-events: none;
+  }
+  .cta::before {
+    width: 420px;
+    height: 420px;
+    right: -140px;
+    top: -200px;
+  }
+  .cta::after {
+    width: 260px;
+    height: 260px;
+    right: -60px;
+    top: -120px;
+  }
+  .cta h2 {
+    color: #fff;
+    margin-bottom: 0.5rem;
+  }
+  .cta p {
+    color: rgb(255 255 255 / 0.9);
+    max-width: 52ch;
+  }
+  .cta-note {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 0.95rem;
+    margin: 0;
+  }
+  .cta-actions {
+    position: relative;
+    z-index: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+    align-items: stretch;
+  }
+  .cta-mail {
+    --btn-bg: rgb(255 255 255 / 0.12);
+    border-color: rgb(255 255 255 / 0.45);
+  }
+  .cta-mail:hover {
+    --btn-bg: rgb(255 255 255 / 0.22);
+  }
+
+  @media (max-width: 800px) {
+    .cta {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>

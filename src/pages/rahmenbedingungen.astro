@@ -1,0 +1,281 @@
+---
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import PageHero from '@/components/PageHero.astro';
+import ContactCta from '@/components/ContactCta.astro';
+import Icon from '@/components/Icon.astro';
+import { insurers, prices } from '@/data/site';
+---
+
+<BaseLayout
+  title="Ablauf & Kosten"
+  description="Ablauf und Rahmenbedingungen der Psychotherapie bei Mirko Birnstein, MSc: Erstgespräch, Kosten (100 € / 50 Min.), Kassenzuschüsse von ÖGK, BVAEB und SVS, Absageregelung und Verschwiegenheit."
+>
+  <PageHero
+    eyebrow="Ablauf & Rahmenbedingungen"
+    title="Gut zu wissen, bevor wir starten"
+    lead="Transparente Rahmenbedingungen schaffen Vertrauen. Hier finden Sie alles zum Erstgespräch, zu den Kosten, zu Zuschüssen der Krankenkassen und zur Absageregelung."
+  />
+
+  <!-- Erstgespräch & Kosten -->
+  <section class="section">
+    <div class="container split">
+      <div class="reveal">
+        <p class="eyebrow">Erstgespräch</p>
+        <h2>Ein erstes Kennenlernen</h2>
+        <p class="lead">
+          Ein unverbindliches Erstgespräch dient dem gegenseitigen Kennenlernen und dem Klären Ihres Anliegens.
+        </p>
+        <p>
+          Im Anschluss können Sie für sich entscheiden, ob Sie eine Psychotherapie bei mir beginnen möchten. Das
+          Erstgespräch dauert wie jede weitere Einzeltherapie <strong>50 Minuten</strong> und ist kostenpflichtig.
+        </p>
+      </div>
+
+      <div class="prices reveal" id="kosten">
+        {
+          prices.map((p) => (
+            <div class="price card">
+              <div>
+                <h3>{p.title}</h3>
+                <p>
+                  <Icon name="clock" size={16} /> {p.duration}
+                </p>
+              </div>
+              <p class="amount">{p.price}</p>
+            </div>
+          ))
+        }
+        <p class="price-note">
+          <Icon name="euro" size={18} />
+          Die Bezahlung erfolgt in bar im Anschluss an die Therapiestunde.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Kassenzuschuss -->
+  <section class="section section--tint" id="zuschuss">
+    <div class="container">
+      <div class="section-head reveal">
+        <p class="eyebrow">Kostenzuschuss</p>
+        <h2>Zuschuss der Krankenkasse</h2>
+        <p class="lead">
+          Bei Vorliegen einer krankheitswertigen Störung haben Sie die Möglichkeit, eine Teilrefundierung über die
+          Krankenkasse in Anspruch zu nehmen.
+        </p>
+      </div>
+
+      <ul class="insurers">
+        {
+          insurers.map((k) => (
+            <li class="card insurer reveal">
+              <p class="insurer-name">{k.name}</p>
+              <p class="insurer-long">{k.long}</p>
+              <p class="insurer-amount">
+                {k.amount}
+                <span>pro Einzelsitzung</span>
+              </p>
+              <a href={k.href} target="_blank" rel="noopener noreferrer">
+                Formulare bei der {k.name}
+                <Icon name="external" size={16} />
+              </a>
+            </li>
+          ))
+        }
+      </ul>
+
+      <div class="info reveal">
+        <span class="icon-badge"><Icon name="calendar" /></span>
+        <p>
+          Wenn Sie einen Zuschuss bei Ihrer Krankenkasse beantragen, ist dort erstmals <strong
+            >ab der 11. Sitzung eine Bewilligung</strong
+          > notwendig. Die entsprechenden Formulare für den Kostenzuschuss finden Sie über die Links oben.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Absage & Verschwiegenheit -->
+  <section class="section">
+    <div class="container two-cards">
+      <article class="card reveal" id="absage">
+        <span class="icon-badge"><Icon name="clock" /></span>
+        <h2>Absageregelung</h2>
+        <p>
+          Da ich mir vereinbarte Termine für Sie freihalte, bitte ich Sie, mir ehestmöglich Bescheid zu geben, sollten
+          Sie einen vereinbarten Termin nicht wahrnehmen können.
+        </p>
+        <p class="highlight">
+          Absagen innerhalb von <strong>48 Stunden</strong> vor dem vereinbarten Termin müssen zur Gänze verrechnet
+          werden.
+        </p>
+      </article>
+
+      <article class="card reveal" id="verschwiegenheit">
+        <span class="icon-badge"><Icon name="lock" /></span>
+        <h2>Verschwiegenheit</h2>
+        <p>
+          Als Psychotherapeut unterliege ich der gesetzlichen Verschwiegenheitspflicht nach dem österreichischen
+          Psychotherapiegesetz.
+        </p>
+        <blockquote>
+          „Der Psychotherapeut sowie seine Hilfspersonen sind zur Verschwiegenheit über alle ihnen in Ausübung ihres
+          Berufes anvertrauten oder bekannt gewordenen Geheimnisse verpflichtet.“
+        </blockquote>
+      </article>
+    </div>
+  </section>
+
+  <ContactCta title="Fragen zum Ablauf?" text="Ich beantworte Ihre Fragen gerne persönlich am Telefon oder per E-Mail." />
+</BaseLayout>
+
+<style>
+  .split {
+    display: grid;
+    grid-template-columns: 1.1fr 1fr;
+    gap: clamp(2rem, 6vw, 5rem);
+    align-items: center;
+  }
+
+  .prices {
+    display: grid;
+    gap: 1rem;
+  }
+  .price {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 1rem;
+  }
+  .price h3 {
+    margin: 0 0 0.2rem;
+  }
+  .price p {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    margin: 0;
+    color: var(--ink-soft);
+    font-size: 0.95rem;
+  }
+  .price .amount {
+    font: 500 clamp(1.6rem, 3vw, 2rem) / 1 var(--font-serif);
+    color: var(--blue-700);
+    white-space: nowrap;
+  }
+  .price-note {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+    margin: 0.5rem 0 0;
+    font-size: 0.95rem;
+    color: var(--ink-soft);
+  }
+  .price-note :global(.icon) {
+    color: var(--blue);
+    flex-shrink: 0;
+  }
+
+  .insurers {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.25rem;
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+  .insurer {
+    display: flex;
+    flex-direction: column;
+    border-top: 4px solid var(--blue);
+  }
+  .insurer p {
+    margin: 0;
+  }
+  .insurer-name {
+    font: 600 1.4rem/1.2 var(--font-serif);
+  }
+  .insurer-long {
+    color: var(--ink-soft);
+    font-size: 0.9rem;
+    min-height: 2.8em;
+    margin-top: 0.25rem !important;
+  }
+  .insurer-amount {
+    font: 500 2.25rem/1 var(--font-serif);
+    color: var(--blue-700);
+    margin: 1.5rem 0 !important;
+  }
+  .insurer-amount span {
+    display: block;
+    margin-top: 0.4rem;
+    font: 400 0.875rem/1.3 var(--font-sans);
+    color: var(--ink-soft);
+  }
+  .insurer a {
+    margin-top: auto;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    font-weight: 600;
+    font-size: 0.95rem;
+    text-decoration: none;
+  }
+  .insurer a:hover {
+    text-decoration: underline;
+  }
+
+  .info {
+    display: flex;
+    gap: 1rem;
+    align-items: flex-start;
+    margin-top: 2rem;
+    padding: 1.5rem;
+    background: var(--blue-100);
+    border-radius: var(--radius);
+  }
+  .info p {
+    margin: 0;
+  }
+  .info .icon-badge {
+    background: #fff;
+  }
+
+  .two-cards {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1.25rem;
+  }
+  .two-cards h2 {
+    font-size: clamp(1.5rem, 2.6vw, 1.9rem);
+    margin-top: 1.25rem;
+  }
+  .highlight {
+    margin: 0;
+    padding: 1rem 1.25rem;
+    background: var(--blue-50);
+    border-left: 3px solid var(--blue);
+    border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+  }
+  blockquote {
+    margin: 0;
+    padding: 1rem 1.25rem;
+    background: var(--blue-50);
+    border-left: 3px solid var(--blue);
+    border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+    font: italic 400 1.05rem/1.55 var(--font-serif);
+  }
+
+  @media (max-width: 900px) {
+    .split,
+    .two-cards {
+      grid-template-columns: 1fr;
+    }
+    .insurers {
+      grid-template-columns: 1fr;
+    }
+    .insurer-long {
+      min-height: 0;
+    }
+  }
+</style>

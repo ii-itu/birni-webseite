@@ -1,0 +1,17 @@
+{
+  "$schema": "node_modules/wrangler/config-schema.json",
+  "name": "mirko-birnstein",
+  "compatibility_date": "2026-11-01",
+  // Reine Static-Assets-Auslieferung: Astro baut nach ./dist, der Worker liefert die Dateien aus.
+  "assets": {
+    "directory": "./dist",
+    "html_handling": "auto-trailing-slash",
+    "not_found_handling": "404-page"
+  },
+  // Eigene Domain – nach dem Umstellen der DNS auf Cloudflare aktivieren:
+  // "routes": [
+  //   { "pattern": "www.mirko-birnstein.at", "custom_domain": true },
+  //   { "pattern": "mirko-birnstein.at", "custom_domain": true }
+  // ],
+  "observability": { "enabled": true }
+}
