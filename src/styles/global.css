@@ -3,14 +3,14 @@
    ------------------------------------------------------------------ */
 :root {
   --blue: #39a6de;          /* Markenfarbe der alten Seite */
-  --blue-700: #1b6f9e;      /* dunklere Variante für Text/Buttons (Kontrast) */
-  --blue-800: #155a80;
+  --blue-700: #1f7cb0;      /* minimal dunklere Variante für kleinen Linktext (Kontrast) */
+  --blue-800: #17668f;
   --blue-100: #e0f1fc;      /* helle Fläche der alten Seite */
   --blue-200: #c7e7fc;      /* Rahmen/Akzent der alten Seite */
   --blue-50: #f3f9fe;
 
-  --ink: #1d2b38;
-  --ink-soft: #4a5a69;
+  --ink: #333333;           /* Titel – wie alte Seite */
+  --ink-soft: #666666;      /* Fließtext – wie alte Seite */
   --line: #dde8f0;
   --bg: #ffffff;
   --surface: #f7fbfe;
@@ -57,7 +57,7 @@ html {
 body {
   margin: 0;
   background: var(--bg);
-  color: var(--ink);
+  color: var(--ink-soft);
   font-family: var(--font-sans);
   font-size: 1.0625rem;
   line-height: 1.7;
@@ -91,6 +91,7 @@ h1 {
 }
 h2 {
   font-size: clamp(1.85rem, 3.6vw, 2.6rem);
+  color: var(--blue);
 }
 h3 {
   font-size: clamp(1.2rem, 2vw, 1.4rem);
@@ -213,8 +214,8 @@ a:hover {
    Buttons
    ------------------------------------------------------------------ */
 .btn {
-  --btn-bg: var(--blue-700);
-  --btn-fg: #fff;
+  --btn-bg: #fff;
+  --btn-fg: var(--blue-700);
   display: inline-flex;
   align-items: center;
   justify-content: center;
@@ -222,7 +223,7 @@ a:hover {
   padding: 0.85rem 1.5rem;
   min-height: 48px;
   border-radius: 999px;
-  border: 1.5px solid transparent;
+  border: 2px solid var(--blue-200);
   background: var(--btn-bg);
   color: var(--btn-fg);
   font: 600 1rem/1.2 var(--font-sans);
@@ -231,33 +232,19 @@ a:hover {
   transition: background-color 0.2s, color 0.2s, border-color 0.2s, transform 0.2s, box-shadow 0.2s;
 }
 .btn:hover {
-  --btn-bg: var(--blue-800);
+  --btn-bg: var(--blue-100);
+  --btn-fg: var(--blue-800);
   color: var(--btn-fg);
+  border-color: var(--blue);
   transform: translateY(-1px);
-  box-shadow: var(--shadow);
+  box-shadow: var(--shadow-sm);
 }
 .btn .icon {
   width: 1.15em;
   height: 1.15em;
 }
 .btn--ghost {
-  --btn-bg: transparent;
-  --btn-fg: var(--blue-700);
-  border-color: var(--blue-200);
-  background: #fff;
-}
-.btn--ghost:hover {
-  --btn-fg: var(--blue-800);
-  border-color: var(--blue);
-  background: var(--blue-50);
-}
-.btn--light {
-  --btn-bg: #fff;
-  --btn-fg: var(--blue-800);
-}
-.btn--light:hover {
-  --btn-bg: var(--blue-50);
-  --btn-fg: var(--blue-800);
+  border-color: var(--line);
 }
 
 .btn-row {

@@ -69,23 +69,13 @@ const isActive = (href: string) => (href === '/' ? current === '/' : current.sta
     position: sticky;
     top: 0;
     z-index: 50;
-    background: rgb(255 255 255 / 0.85);
-    backdrop-filter: saturate(160%) blur(14px);
-    -webkit-backdrop-filter: saturate(160%) blur(14px);
-    border-bottom: 1px solid transparent;
-    transition: border-color 0.3s, box-shadow 0.3s;
-  }
-  .site-header::before {
-    /* dünne Markenlinie wie auf der alten Seite */
-    content: '';
-    position: absolute;
-    inset: 0 0 auto;
-    height: 3px;
-    background: var(--blue);
+    /* hellblauer Header mit kräftiger blauer Linie – wie auf der alten Seite */
+    background: var(--blue-100);
+    border-bottom: 5px solid var(--blue);
+    transition: box-shadow 0.3s;
   }
   .site-header.is-scrolled {
-    border-bottom-color: var(--line);
-    box-shadow: 0 6px 20px -16px rgb(16 42 66 / 0.35);
+    box-shadow: 0 8px 24px -16px rgb(16 42 66 / 0.35);
   }
 
   .header-inner {
@@ -143,18 +133,18 @@ const isActive = (href: string) => (href === '/' ? current === '/' : current.sta
     display: block;
     padding: 0.5rem 0.85rem;
     border-radius: 999px;
-    color: var(--ink);
-    font-weight: 500;
+    color: var(--blue-700);
+    font-weight: 700;
     font-size: 0.975rem;
     text-decoration: none;
     transition: background-color 0.2s, color 0.2s;
   }
   .main-nav ul a:hover {
-    background: var(--blue-50);
+    background: rgb(255 255 255 / 0.6);
     color: var(--blue-800);
   }
   .main-nav ul a[aria-current='page'] {
-    background: var(--blue-100);
+    background: #fff;
     color: var(--blue-800);
   }
   .nav-cta {
@@ -179,24 +169,17 @@ const isActive = (href: string) => (href === '/' ? current === '/' : current.sta
   }
 
   @media (max-width: 899px) {
-    /* backdrop-filter würde das fixe Menü am Header „festkleben“ */
-    .site-header {
-      backdrop-filter: none;
-      -webkit-backdrop-filter: none;
-      background: #fff;
-    }
     .nav-toggle {
       display: grid;
     }
     .main-nav {
       position: fixed;
-      inset: var(--header-h) 0 0;
+      inset: calc(var(--header-h) + 5px) 0 0;
       flex-direction: column;
       align-items: stretch;
       gap: 1.5rem;
       padding: 1.5rem var(--gutter) 2rem;
       background: #fff;
-      border-top: 1px solid var(--line);
       opacity: 0;
       visibility: hidden;
       transform: translateY(-8px);
@@ -207,8 +190,12 @@ const isActive = (href: string) => (href === '/' ? current === '/' : current.sta
       flex-direction: column;
       gap: 0.25rem;
     }
+    .main-nav ul a[aria-current='page'] {
+      background: var(--blue-100);
+    }
     .main-nav ul a {
       font-family: var(--font-serif);
+      font-weight: 600;
       font-size: 1.5rem;
       padding: 0.75rem 1rem;
       border-radius: var(--radius-sm);

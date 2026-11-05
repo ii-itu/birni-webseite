@@ -22,11 +22,11 @@ const {
         <p class="cta-note"><Icon name="clock" size={18} /> {practice.appointmentNote}</p>
       </div>
       <div class="cta-actions">
-        <a class="btn btn--light" href={practice.phoneHref}>
+        <a class="btn" href={practice.phoneHref}>
           <Icon name="phone" />
           {practice.phoneDisplay}
         </a>
-        <a class="btn cta-mail" href={`mailto:${practice.email}`}>
+        <a class="btn" href={`mailto:${practice.email}`}>
           <Icon name="mail" />
           E-Mail schreiben
         </a>
@@ -48,15 +48,16 @@ const {
     align-items: center;
     padding: clamp(2rem, 5vw, 3.5rem);
     border-radius: var(--radius-lg);
-    background: linear-gradient(135deg, var(--blue-700) 0%, #2a8fc6 60%, var(--blue) 100%);
-    color: #fff;
+    background: var(--blue-100);
+    border: 1px solid var(--blue-200);
+    color: var(--ink-soft);
   }
   .cta::before,
   .cta::after {
     content: '';
     position: absolute;
     border-radius: 50%;
-    border: 1px solid rgb(255 255 255 / 0.18);
+    border: 1px solid var(--blue-200);
     pointer-events: none;
   }
   .cta::before {
@@ -72,12 +73,13 @@ const {
     top: -120px;
   }
   .cta h2 {
-    color: #fff;
     margin-bottom: 0.5rem;
   }
   .cta p {
-    color: rgb(255 255 255 / 0.9);
     max-width: 52ch;
+  }
+  .cta-note :global(.icon) {
+    color: var(--blue);
   }
   .cta-note {
     display: inline-flex;
@@ -93,13 +95,6 @@ const {
     flex-direction: column;
     gap: 0.75rem;
     align-items: stretch;
-  }
-  .cta-mail {
-    --btn-bg: rgb(255 255 255 / 0.12);
-    border-color: rgb(255 255 255 / 0.45);
-  }
-  .cta-mail:hover {
-    --btn-bg: rgb(255 255 255 / 0.22);
   }
 
   @media (max-width: 800px) {
