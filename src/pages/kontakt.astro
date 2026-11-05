@@ -4,10 +4,11 @@ import PageHero from '@/components/PageHero.astro';
 import Icon from '@/components/Icon.astro';
 import { practice } from '@/data/site';
 
-const { lat, lon } = practice.geo;
-const d = 0.006;
-const mapSrc = `https://www.openstreetmap.org/export/embed.html?bbox=${lon - d * 1.6}%2C${lat - d}%2C${lon + d * 1.6}%2C${lat + d}&layer=mapnik&marker=${lat}%2C${lon}`;
-const mapLink = `https://www.openstreetmap.org/?mlat=${lat}&mlon=${lon}#map=17/${lat}/${lon}`;
+const query = encodeURIComponent(`${practice.street}, ${practice.zip} ${practice.city}, Österreich`);
+// Einbettung ohne API-Key; wird erst nach Klick geladen (Einwilligung)
+const mapSrc = `https://www.google.com/maps?q=${query}&z=16&hl=de&output=embed`;
+// Universal-Link: öffnet am Handy die Google-Maps-App
+const mapLink = `https://www.google.com/maps/search/?api=1&query=${query}`;
 ---
 
 <BaseLayout
@@ -57,14 +58,14 @@ const mapLink = `https://www.openstreetmap.org/?mlat=${lat}&mlon=${lon}#map=17/$
           <span class="icon-badge"><Icon name="pin" /></span>
           <p class="map-title">Karte anzeigen</p>
           <p>
-            Beim Laden der Karte werden Daten (u. a. Ihre IP-Adresse) an OpenStreetMap übertragen. Mehr dazu in der <a
+            Beim Laden der Karte werden Daten (u. a. Ihre IP-Adresse) an Google (Google Maps) übertragen, auch in die USA. Mehr dazu in der <a
               href="/datenschutz/#karte">Datenschutzerklärung</a
             >.
           </p>
           <div class="btn-row">
             <button type="button" class="btn" data-map-load>Karte laden</button>
             <a class="btn btn--ghost" href={mapLink} target="_blank" rel="noopener noreferrer">
-              In OpenStreetMap öffnen
+              In Google Maps öffnen
               <Icon name="external" size={18} />
             </a>
           </div>
@@ -79,7 +80,7 @@ const mapLink = `https://www.openstreetmap.org/?mlat=${lat}&mlon=${lon}#map=17/$
     map.querySelector('[data-map-load]')?.addEventListener('click', () => {
       const iframe = document.createElement('iframe');
       iframe.src = map.dataset.src ?? '';
-      iframe.title = 'Lageplan der Praxis auf OpenStreetMap';
+      iframe.title = 'Lageplan der Praxis auf Google Maps';
       iframe.loading = 'lazy';
       iframe.referrerPolicy = 'no-referrer';
       map.replaceChildren(iframe);
